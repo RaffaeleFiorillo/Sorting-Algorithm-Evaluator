@@ -1,0 +1,10 @@
+Algorithm: quick_sort | Iterations (nº tests * max array length): 16000
+	Total Execution Time: 79.40621920000001
+Algorithm: merge_sort | Iterations (nº tests * max array length): 16000
+	Total Execution Time: 155.7471894
+Algorithm: selection_sort | Iterations (nº tests * max array length): 16000
+	Total Execution Time: 3377.5201808
+Algorithm: bubble_sort | Iterations (nº tests * max array length): 16000
+	Total Execution Time: 8046.2937305
+Algorithm: python_sort | Iterations (nº tests * max array length): 16000
+	Total Execution Time: 35.210278200000175
