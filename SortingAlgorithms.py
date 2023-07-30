@@ -122,6 +122,27 @@ def og_sort(arr):
     elements_removed = 0  # the number of elements removed from arr up until current iteration (= len(ge))
     for i in range(1, len(arr)):  # we can skip the first element since it will be always sorted
         if arr[i-elements_removed] < arr[i-elements_removed - 1]:  # arr[i] < arr[i-1] -> the element is not in order
+            ge.append(arr.pop(i-elements_removed))
+            elements_removed += 1
+
+    # step 2: The mix-taping-> go through ge and put every element at the right position inside arr
+    elements_removed = 0  # the number of elements removed from ge up until current iteration (makes the index correct)
+    for i in range(len(ge)):  # we can skip the first element since it will be always sorted
+        bisect.insort(arr, ge.pop(i-elements_removed))
+        elements_removed += 1
+
+    return arr
+
+
+def improved_og_sort(arr):
+    if len(arr) <= 1:  # the list is already sorted
+        return arr
+
+    # step 1: The Grinding -> go through arr and remove all unordered elements, then put them, in order, inside ge
+    ge = []  # ordered list of unordered elements inside arr
+    elements_removed = 0  # the number of elements removed from arr up until current iteration (= len(ge))
+    for i in range(1, len(arr)):  # we can skip the first element since it will be always sorted
+        if arr[i-elements_removed] < arr[i-elements_removed - 1]:  # arr[i] < arr[i-1] -> the element is not in order
             bisect.insort(ge, arr.pop(i-elements_removed))
             elements_removed += 1
 

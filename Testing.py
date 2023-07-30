@@ -5,7 +5,7 @@ from settings import *
 
 
 # creates a random list of a certain length
-def generate_random_list(length):
+def generate_random_array(length):
 	return [random.randint(1, 1000) for _ in range(length)]
 
 
@@ -13,7 +13,7 @@ def test_sorting_algorithm(sorting_algorithm, list_length):
 	# print(list_length)
 	times = []
 	for _ in range(num_tests):
-		test_list = generate_random_list(list_length)
+		test_list = generate_random_array(list_length)
 		start_time = timeit.default_timer()
 		_ = sorting_algorithm(test_list)
 		end_time = timeit.default_timer()
@@ -35,8 +35,8 @@ def test_algorithm(sorting_algorithm, x_data):
 
 
 def test_and_plot(sorting_algorithm):
-	x_data = list(range(1, max_list_length + 1))
-	print(f"Iterations (nº tests * max array length): {max_list_length * num_tests}")
+	x_data = list(range(1, max_array_length + 1))
+	print(f"Iterations (nº tests * max array length): {max_array_length * num_tests}")
 	start_time = timeit.default_timer()
 	min_times, avg_times, max_times = test_algorithm(sorting_algorithm, x_data)
 	end_time = timeit.default_timer()
@@ -45,15 +45,15 @@ def test_and_plot(sorting_algorithm):
 
 
 def test_various_and_plot():
-	x_data = list(range(1, max_list_length + 1))
+	x_data = list(range(1, max_array_length + 1))
 
 	min_times = {algorithm_name: [] for algorithm_name in ALGORITHMS.keys()}
 	max_times = {algorithm_name: [] for algorithm_name in ALGORITHMS.keys()}
 	avg_times = {algorithm_name: [] for algorithm_name in ALGORITHMS.keys()}
 
 	for algorithm_name, algorithm in ALGORITHMS.items():
-		n_items = max_list_length * (max_list_length + 1) * 2  # 4*n(n+1)/2 = 1 + 2 + 3 + ... + n
-		print(f"Algorithm: {algorithm_name} | Elements to order: {n_items} | Iterations: {max_list_length * num_tests}")
+		n_items = max_array_length * (max_array_length + 1) * 2  # 4*n(n+1)/2 = 1 + 2 + 3 + ... + n
+		print(f"Algorithm: {algorithm_name} | Elements to order: {n_items} | Iterations: {max_array_length * num_tests}")
 		start_time = timeit.default_timer()
 		mn_times, a_times, mx_times = test_algorithm(algorithm, x_data)
 		end_time = timeit.default_timer()
@@ -85,3 +85,23 @@ def test_various_and_plot():
 		"List Length",
 		"Average Time (seconds)",
 		3)
+
+
+def is_sorted(arr):
+	for i in range(1, len(arr)):
+		if arr[i] < arr[i - 1]:
+			return False
+	return True
+
+
+def test_if_works(sorting_algorithm):
+	for i in range(num_tests):
+		arr = generate_random_array(max_array_length)
+		sorted_arr = sorting_algorithm(arr)
+		if is_sorted(sorted_arr):
+			print(f"Test {i+1}: SUCCESS!")
+		else:
+			print(f"Test {i+1}: FAIL!")
+			return False
+	print(f"All {num_tests} Tests Where Successful!")
+	return True
